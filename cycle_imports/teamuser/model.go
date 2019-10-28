@@ -1,6 +1,6 @@
 package teamuser
 
-import "github.com/lokalise/go-lokalise-api"
+import "github.com/lokalise/go-lokalise-api/handlers"
 
 type TeamUser struct {
 	UserID    int64  `json:"user_id"`
@@ -16,7 +16,7 @@ type Response struct {
 }
 
 type ResponseMultiple struct {
-	lokalise.Paged
+	handlers.Paged
 	TeamID    int64      `json:"team_id"`
 	TeamUsers []TeamUser `json:"team_users,omitempty"`
 }

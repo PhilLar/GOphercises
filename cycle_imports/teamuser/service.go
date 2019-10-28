@@ -3,8 +3,7 @@ package teamuser
 import (
 	"context"
 	"fmt"
-
-	"github.com/lokalise/go-lokalise-api"
+	"github.com/lokalise/go-lokalise-api/handlers"
 )
 
 const (
@@ -12,21 +11,21 @@ const (
 )
 
 type Service struct {
-	Client *lokalise.Client
+	Client *Client
 }
 
 func pathTeamUsers(teamID int64) string {
 	return fmt.Sprintf("%s/%d/users", pathTeams, teamID)
 }
 
-func (c *Service) List(ctx context.Context, teamID int64, pageOptions lokalise.PageOptions) (ResponseMultiple, error) {
+func (c *Service) List(ctx context.Context, teamID int64, pageOptions handlers.PageOptions) (ResponseMultiple, error) {
 	var res ResponseMultiple
 	resp, err := c.Client.GetList(ctx, pathTeamUsers(teamID), &res, &pageOptions)
 	if err != nil {
 		return res, err
 	}
-	lokalise.ApplyPaged(resp, &res.Paged)
-	return res, lokalise.ApiError(resp)
+	handlers.ApplyPaged(resp, &res.Paged)
+	return res, handlers.ApiError(resp)
 }
 
 func (c *Service) Retrieve(ctx context.Context, teamID, userID int64) (Response, error) {
@@ -35,5 +34,5 @@ func (c *Service) Retrieve(ctx context.Context, teamID, userID int64) (Response,
 	if err != nil {
 		return Response{}, err
 	}
-	return res, lokalise.ApiError(resp)
+	return res, handlers.ApiError(resp)
 }

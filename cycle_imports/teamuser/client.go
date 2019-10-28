@@ -1,13 +1,13 @@
-package lokalise
+package teamuser
 
 import (
+	"github.com/lokalise/go-lokalise-api/Env"
+	"github.com/lokalise/go-lokalise-api/handlers"
 	"io"
 	"os"
 	"time"
 
 	"github.com/go-resty/resty/v2"
-
-	"github.com/lokalise/go-lokalise-api/teamuser"
 )
 
 type Client struct {
@@ -18,7 +18,7 @@ type Client struct {
 	httpClient *resty.Client
 	logger     io.Writer
 
-	TeamUsers teamuser.Service
+	TeamUsers Service
 }
 
 type ClientOption func(*Client) error
@@ -28,7 +28,7 @@ func NewClient(apiToken string, options ...ClientOption) (*Client, error) {
 	c := Client{
 		apiToken:   apiToken,
 		retryCount: 3,
-		baseURL:    defaultBaseURL,
+		baseURL:    Env.DefaultBaseURL,
 	}
 
 	for _, o := range options {
@@ -45,11 +45,11 @@ func NewClient(apiToken string, options ...ClientOption) (*Client, error) {
 	c.httpClient = resty.New().
 		SetHostURL(c.baseURL).
 		SetRetryCount(c.retryCount).
-		SetHeader(apiTokenHeader, c.apiToken).
+		SetHeader(Env.ApiTokenHeader, c.apiToken).
 		// SetLogger(c.logger).
-		SetError(errorResponse{})
+		SetError(handlers.ErrorResponse{})
 
-	c.TeamUsers = teamuser.Service{Client: &c}
+	c.TeamUsers = Service{Client: &c}
 
 	// Add other services here
 

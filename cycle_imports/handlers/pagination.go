@@ -1,4 +1,4 @@
-package lokalise
+package handlers
 
 import (
 	"fmt"

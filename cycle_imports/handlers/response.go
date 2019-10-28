@@ -1,4 +1,4 @@
-package lokalise
+package handlers
 
 import (
 	"errors"
@@ -15,7 +15,7 @@ const (
 	headerPage       = "X-Pagination-Page"
 )
 
-type errorResponse struct {
+type ErrorResponse struct {
 	Error Error `json:"error"`
 }
 
@@ -37,7 +37,7 @@ func ApiError(res *resty.Response) error {
 	if responseError == nil {
 		return errors.New("lokalise: response marked as error but no data returned")
 	}
-	responseErrorModel, ok := responseError.(*errorResponse)
+	responseErrorModel, ok := responseError.(*ErrorResponse)
 	if !ok {
 		return errors.New("lokalise: response error model unknown")
 	}
