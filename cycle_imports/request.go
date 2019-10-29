@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/lokalise/go-lokalise-api/pagination"
 )
 
 const (
@@ -15,7 +16,7 @@ func (c *Client) Get(ctx context.Context, path string, res interface{}) (*resty.
 	return c.req(ctx, path, res).Get(path)
 }
 
-func (c *Client) GetList(ctx context.Context, path string, res interface{}, options OptionsApplier) (*resty.Response, error) {
+func (c *Client) GetList(ctx context.Context, path string, res interface{}, options pagination.OptionsApplier) (*resty.Response, error) {
 	req := c.req(ctx, path, res)
 	options.Apply(req)
 	return req.Get(path)

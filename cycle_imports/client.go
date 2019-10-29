@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-resty/resty/v2"
 
+	"github.com/lokalise/go-lokalise-api/handlers"
 	"github.com/lokalise/go-lokalise-api/teamuser"
 )
 
@@ -47,7 +48,7 @@ func NewClient(apiToken string, options ...ClientOption) (*Client, error) {
 		SetRetryCount(c.retryCount).
 		SetHeader(apiTokenHeader, c.apiToken).
 		// SetLogger(c.logger).
-		SetError(errorResponse{})
+		SetError(handlers.ErrorResponse{})
 
 	c.TeamUsers = teamuser.Service{Client: &c}
 

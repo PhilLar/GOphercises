@@ -5,10 +5,11 @@ import (
 	"testing"
 
 	"github.com/lokalise/go-lokalise-api"
+	"github.com/lokalise/go-lokalise-api/pagination"
 )
 
 const (
-	token = "c4fab2a40efb0256a57f92f05fd975f6eb6e0866"
+	token = "bab1f61e242a4f682149511d1031a53ae926bc6d"
 )
 
 func TestGetTeamUser(t *testing.T) {
@@ -32,7 +33,7 @@ func TestGetTeamUsers(t *testing.T) {
 		t.Fatalf("client instantiation: %v", err)
 	}
 
-	resp, err := client.TeamUsers.List(context.Background(), 193277, lokalise.PageOptions{
+	resp, err := client.TeamUsers.List(context.Background(), 193277, pagination.PageOptions{
 		Limit: 10,
 		Page:  1,
 	})

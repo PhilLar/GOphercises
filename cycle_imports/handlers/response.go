@@ -1,9 +1,10 @@
-package lokalise
+package handlers
 
 import (
 	"errors"
 	"fmt"
 	"github.com/go-resty/resty/v2"
+	"github.com/lokalise/go-lokalise-api/pagination"
 	"net/http"
 	"strconv"
 )
@@ -15,7 +16,7 @@ const (
 	headerPage       = "X-Pagination-Page"
 )
 
-type errorResponse struct {
+type ErrorResponse struct {
 	Error Error `json:"error"`
 }
 
@@ -37,14 +38,14 @@ func ApiError(res *resty.Response) error {
 	if responseError == nil {
 		return errors.New("lokalise: response marked as error but no data returned")
 	}
-	responseErrorModel, ok := responseError.(*errorResponse)
+	responseErrorModel, ok := responseError.(*ErrorResponse)
 	if !ok {
 		return errors.New("lokalise: response error model unknown")
 	}
 	return responseErrorModel.Error
 }
 
-func ApplyPaged(res *resty.Response, paged *Paged) {
+func ApplyPaged(res *resty.Response, paged *pagination.Paged) {
 	headers := res.Header()
 	paged.TotalCount = headerInt64(headers, headerTotalCount)
 	paged.PageCount = headerInt64(headers, headerPageCount)
