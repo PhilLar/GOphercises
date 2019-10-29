@@ -2,9 +2,10 @@ package integration_test
 
 import (
 	"context"
-	"github.com/lokalise/go-lokalise-api/handlers"
-	"github.com/lokalise/go-lokalise-api/teamuser"
 	"testing"
+
+	"github.com/lokalise/go-lokalise-api"
+	"github.com/lokalise/go-lokalise-api/pagination"
 )
 
 const (
@@ -13,7 +14,7 @@ const (
 
 func TestGetTeamUser(t *testing.T) {
 
-	client, err := teamuser.NewClient(token)
+	client, err := lokalise.NewClient(token)
 	if err != nil {
 		t.Fatalf("client instantiation: %v", err)
 	}
@@ -27,12 +28,12 @@ func TestGetTeamUser(t *testing.T) {
 
 func TestGetTeamUsers(t *testing.T) {
 
-	client, err := teamuser.NewClient(token)
+	client, err := lokalise.NewClient(token)
 	if err != nil {
 		t.Fatalf("client instantiation: %v", err)
 	}
 
-	resp, err := client.TeamUsers.List(context.Background(), 193277, handlers.PageOptions{
+	resp, err := client.TeamUsers.List(context.Background(), 193277, pagination.PageOptions{
 		Limit: 10,
 		Page:  1,
 	})

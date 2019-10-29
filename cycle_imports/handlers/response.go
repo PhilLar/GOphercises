@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-resty/resty/v2"
+	"github.com/lokalise/go-lokalise-api/pagination"
 	"net/http"
 	"strconv"
 )
@@ -44,7 +45,7 @@ func ApiError(res *resty.Response) error {
 	return responseErrorModel.Error
 }
 
-func ApplyPaged(res *resty.Response, paged *Paged) {
+func ApplyPaged(res *resty.Response, paged *pagination.Paged) {
 	headers := res.Header()
 	paged.TotalCount = headerInt64(headers, headerTotalCount)
 	paged.PageCount = headerInt64(headers, headerPageCount)
