@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	token = "c4fab2a40efb0256a57f92f05fd975f6eb6e0866"
+	token = "bab1f61e242a4f682149511d1031a53ae926bc6d"
 )
 
 func TestGetTeamUser(t *testing.T) {
